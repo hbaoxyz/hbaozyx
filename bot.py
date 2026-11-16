@@ -237,7 +237,8 @@ functions = [
 
             
 print("??𝓾𝓸𝓷𝓰𝓚💢💤 /n nhập token rồi nhập id admin vô !!!")            
-TOKEN = input("        import os
+import os
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 
