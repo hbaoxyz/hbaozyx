@@ -3933,9 +3933,11 @@ async def tabnhaymess(interaction: discord.Interaction):
 
 @bot.event
 async def on_ready():
-    await tree.sync()
-    print("✅ Bot đã online và đã sync slash command")            
-
+    print(f"Bot: {bot.user}")
+    print(f"Bot ID: {bot.user.id}")
+    print(f"Đã đóng kết nối: {bot.is_closed()}")
+    print(f"Độ trễ Gateway: {bot.latency:.3f}s")
+    print("✅ Bot đã kết nối Discord")
 @tree.command(name="treodis", description="Treo ng\u00f4n discord")
 @app_commands.describe(
     tokens="Token",
