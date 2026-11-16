@@ -6910,7 +6910,7 @@ async def tabsettheme(interaction: discord.Interaction, stop: str = None):
 import discord, os, threading, time, re
 from discord import app_commands
 from discord.ui import Button, View
-from module.nhaypoll import start_nhay_poll_func, stop_nhay_poll
+
 
 USER_POLL_TASKS = {}
 
