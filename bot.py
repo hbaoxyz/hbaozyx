@@ -245,7 +245,13 @@ TOKEN = os.getenv("DISCORD_TOKEN")
 if not TOKEN:
     raise ValueError("Chưa cấu hình DISCORD_TOKEN trên Railway!")
 ADMIN_ID = int(os.getenv("ADMIN_ID", "0"))
-ADMIN_IDS = [aid.strip() for aid in ADMIN_IDS]
+import os
+
+ADMIN_IDS = [
+    aid.strip()
+    for aid in os.getenv("ADMIN_IDS", "").split(",")
+    if aid.strip()
+]
 
 
 INTENTS = discord.Intents.default()
