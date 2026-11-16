@@ -237,9 +237,12 @@ functions = [
 
             
 print("??𝓾𝓸𝓷𝓰𝓚💢💤 /n nhập token rồi nhập id admin vô !!!")            
-import os
-TOKEN = os.getenv("DISCORD_TOKEN")
-
+TOKEN = os.environ["DISCORD_TOKEN"]
+ADMIN_IDS = [
+    x.strip()
+    for x in os.getenv("ADMIN_IDS", "").split(",")
+    if x.strip()
+]
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 if not TOKEN:
