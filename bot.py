@@ -237,8 +237,13 @@ functions = [
 
             
 print("??𝓾𝓸𝓷𝓰𝓚💢💤 /n nhập token rồi nhập id admin vô !!!")            
-TOKEN = input("        Token bot của bạn: ").strip()
-ADMIN_IDS = input("        ID Admin chính: ").split(",")
+TOKEN = input("        import os
+
+TOKEN = os.getenv("DISCORD_TOKEN")
+
+if not TOKEN:
+    raise ValueError("Chưa cấu hình DISCORD_TOKEN trên Railway!")
+ADMIN_ID = int(os.getenv("ADMIN_ID", "0"))
 ADMIN_IDS = [aid.strip() for aid in ADMIN_IDS]
 
 
