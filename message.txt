@@ -1,0 +1,167 @@
+class MenuSelect(discord.ui.Select):
+    def __init__(self):
+        options = [
+            discord.SelectOption(label="🛠️ Quản lí", value="quanli"),
+            discord.SelectOption(label="💬 Messenger", value="messenger"),
+            discord.SelectOption(label="🎮 Discord", value="discord"),
+        ]
+
+        super().__init__(
+            placeholder="📂 Chọn danh mục để xem lệnh...",
+            min_values=1,
+            max_values=1,
+            options=options
+        )
+
+    async def callback(self, interaction: discord.Interaction):
+        value = self.values[0]
+
+        if value == "messenger":
+            desc = (
+                "```"
+                "/treoanhmess - spam ảnh mess\n"
+                "/treomess - treo ngôn mess\n"
+                "/nhaymess - nhây réo tên\n"
+                "/nhaytagmess - nhây tag mess\n"
+                "/nhaynamebox - nhây tên box\n"
+                "/tabnhaymess - dừng tab nhây réo tên\n"
+                "/tabnhaytagmess - dừng tab nhây tag mess\n"
+                "/tabnhaynamebox- dừng tab nhây name box\n"
+                "/setnenmess - đổi nền mess\n"
+                "/tabsetnenmess - dừng tab đổi nền mess\n"
+                "/nhaypollmess - spam poll mess\n"
+                "/tabnhaypollmess - dừng tab treo poll mess\n"
+                "/combomess - tạo combo mess siêu bá(chỉ admin)\n"
+                "/tabcombomess - dừng tab combo mess\n"
+                "/namechange - đổi tên thành viên mess\n"
+                "/tabnamechange - dừng tab name change\n"
+                "/raidbox - tag pr5 (đang lỗi api)"
+                "```"
+            )
+
+        elif value == "discord":
+            desc = (
+                "```"
+                "/treodis - treo ngôn discord\n"
+                "/allnhaydis - all các chức năng nhây discord\n"
+                "/tabtreodis - tab treo ngôn discord\n"
+                "/taballnhaydis - dừng all chức năng nhây discord\n"
+                "/treoaudio - spam audio BuiTuanManh.mp3\n"
+                "/tabtreoaudio - dừng tab treo audio"
+                "```"
+            )
+
+        elif value == "quanli":
+            desc = (
+                "```"
+                "/menu - hiển thị danh sách chức năng của bot\n"
+                "/addadmin - thêm admin phụ\n"
+                "/xoaadmin - xóa admin phụ\n"
+                "/listadmin - danh sách admin phụ\n"
+                "/checkuid - check acc discord bằng uid\n"
+                "/idkenh - lấy id kênh\n"
+                "/say1 - bot nhại v1\n"
+                "/say2 - bot nhại v2\n"
+                "/nova - hỏi AI nova pro"
+                "```"
+            )
+
+        embed = discord.Embed(
+            title="📂 Danh mục lệnh",
+            description=desc,
+            color=discord.Color.from_rgb(40, 40, 40)
+        )
+
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+class MenuView(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+        self.add_item(MenuSelect())
+
+        self.add_item(discord.ui.Button(
+            label="📊 Thông tin bot",
+            style=discord.ButtonStyle.secondary,
+            custom_id="info_bot"
+        ))
+
+        self.add_item(discord.ui.Button(
+            label="🌐 Cre: 𝓨𝓾𝓸𝓷𝓰𝓚💢💤",
+            style=discord.ButtonStyle.link,
+            url="https://guns.lol/manhbui"
+        ))
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if interaction.data.get("custom_id") == "info_bot":
+
+            admin_id = 1366787718868242482
+            admin_user = await interaction.client.fetch_user(admin_id)
+
+            desc = (
+                "### 👑 **Thông tin:**\n"
+                f"• **Tác giả:** 𝓨𝓾𝓸𝓷𝓰𝓚💢💤\n"
+                f"• **Version:** `2.0`\n"
+                f"• **Ngôn ngữ:** Python · discord.py\n"
+                f"• **Ngày ra mắt:** 27/12/2025\n"
+                "━━━━━━━━━━━━━━━━━━\n\n"
+
+                "### 💸 **Bảng Giá Dịch Vụ**\n"
+                "**Thuê Bot:**\n"
+                "› 20k/tuần · 50k/tháng · 100k/năm · 200k/vĩnh viễn\n\n"
+                "**Full Source:**\n"
+                "› 400k (kèm hướng dẫn + tối ưu)\n"
+                "━━━━━━━━━━━━━━━━━━\n\n"
+
+                f"📩 **Liên hệ admin:** <@{1366787718868242482}>"
+            )
+
+            info = discord.Embed(
+                title="📊 THÔNG TIN BOT",
+                description=desc,
+                color=discord.Color.from_rgb(30, 140, 255)
+            )
+
+            if admin_user and admin_user.avatar:
+                info.set_footer(
+                    text="𝓨𝓾𝓸𝓷𝓰𝓚💢💤 • Premium Bot System",
+                    icon_url=admin_user.avatar.url
+                )
+            else:
+                info.set_footer(text="𝓨𝓾𝓸𝓷𝓰𝓚💢💤 • Premium Bot System")
+
+            await interaction.response.send_message(embed=info)
+            return False
+        
+        return True
+
+@tree.command(name="menu", description="Hiển thị danh sách chức năng của bot")
+async def menu(interaction: discord.Interaction):
+
+    embed = discord.Embed(
+        title="⚙️ 𝓨𝓾𝓸𝓷𝓰𝓚💢💤 – MENU",
+        description=(
+            "💀 **Dominion Protocol | 𝓨𝓾𝓸𝓷𝓰𝓚💢💤 System**\n"
+            "Chọn danh mục bên dưới để xem lệnh chi tiết."
+        ),
+        color=discord.Color.from_rgb(40, 40, 40)
+    )
+
+    embed.set_thumbnail(
+        url="https://media.discordapp.net/attachments/1402549122803961856/1435610005415006278/4712027.png?ex=69337bc1&is=69322a41&hm=1e0fded25e409bec1c1e9bc9451e494b59aade73f3eb74fcaea23b147bc759d3&=&format=webp&quality=lossless"
+    )
+    embed.set_footer(text="ManhBui Bot")
+
+    await interaction.response.send_message(embed=embed, view=MenuView())
+
+
+
+
+@bot.event
+async def on_ready():
+    await tree.sync()
+    print(f"✅ Bot đã online với tên: {bot.user}")
+    print("✅ Slash command đã được sync thành công!")    
+
+bot.run(TOKEN)
